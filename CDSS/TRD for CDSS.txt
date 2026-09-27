@@ -1,0 +1,173 @@
+pTechnical Requirements Document (TRD)
+1. System Architecture
+
+The CDSS follows a layered architecture:
+
+Frontend Layer
+API Gateway Layer
+AI Backend Services Layer
+ML Inference Layer
+Data Storage Layer
+
+2. Architecture Components
+2.1 Frontend Layer Technology
+	React.js
+	HTML/CSS/JavaScript
+	Features
+		Symptom input form
+		Free-text clinical input
+		Diagnosis results panel
+		Red flag alerts
+		Treatment recommendation cards
+		Patient history dashboard
+2.2 API Gateway Layer Technology
+	FastAPI
+	Responsibilities
+	Authentication
+	Request routing
+	Response formatting
+	API communication
+2.3 AI Backend Services
+	Symptom Extraction Module
+	Uses NLP/LLM APIs.
+	Converts free-text input into structured symptoms.
+	Red Flag Engine
+	Rule-based logic.
+	Detects emergency conditions.
+	Uses NHM danger sign rules.
+	Treatment RAG Module
+	Searches NHM guidelines.
+	Retrieves relevant treatment recommendations.
+
+3. ML Inference Layer
+	DDx Prediction Engine
+	Algorithms
+		XGBoost
+		Random Forest Ensemble
+	Output
+	Top-5 diagnoses
+	Confidence scores
+	SHAP explanations
+	Explainability
+	SHAP values visualize feature importance.
+	Provides transparent reasoning.
+
+4. Data Layer
+PostgreSQL
+
+Stores:
+
+Patient data
+Visit history
+Doctor information
+Logs
+ChromaDB
+
+Stores:
+
+NHM guideline embeddings
+Treatment knowledge vectors
+Model Store
+
+Stores:
+
+Trained models (.joblib)
+SHAP explainers
+5. Data Flow
+Doctor enters patient information.
+Frontend sends request to FastAPI.
+NLP extracts structured symptoms.
+Red Flag Engine checks emergency rules.
+ML model predicts differential diagnoses.
+RAG retrieves NHM treatment guidelines.
+Results returned to frontend.
+Patient data stored in PostgreSQL.
+
+6. APIs
+Input API
+
+POST /predict
+
+Request
+Symptoms
+Vitals
+Lab values
+Patient history
+Response
+Diagnoses
+Confidence scores
+Alerts
+Treatment recommendations
+History API
+
+GET /patient/history
+
+Returns:
+
+Past visits
+Diagnoses
+Medications
+
+7. Security Requirements
+Input validation
+Secure API handling
+Controlled database access
+Encrypted communication (HTTPS)
+Authentication for users
+
+8. Performance Requirements
+Prediction latency under 3 seconds
+Concurrent request handling
+Optimized database queries
+Efficient vector search
+
+9. Hardware Requirements
+Minimum
+Intel i5 processor
+8 GB RAM
+250 GB storage
+Recommended
+Intel i7 / Ryzen 7
+16 GB RAM
+SSD storage
+
+10. Software Requirements
+Python 3.10+
+FastAPI / Flask
+React.js
+PostgreSQL
+ChromaDB
+XGBoost
+Scikit-learn
+SHAP
+Docker (optional)
+
+11. Testing Strategy
+Unit Testing
+API testing
+Model testing
+Rule engine testing
+Integration Testing
+Frontend-backend communication
+Database integration
+RAG retrieval testing
+System Testing
+End-to-end workflow validation
+Performance testing
+UI testing
+
+12. Deployment Strategy
+Local Deployment
+React frontend
+FastAPI backend
+PostgreSQL database
+Cloud Deployment (Optional)
+AWS / Azure / Render
+Docker containerization
+
+13. Risks and Challenges
+Dataset quality issues
+Prediction bias
+Clinical validation limitations
+Data privacy concerns
+Dependence on internet APIs
